@@ -16,7 +16,10 @@ class Character
 end
 
 class Battle
-  def start c1, c2
+  def start player_deck, enemy_deck
+    c1 = player_deck.first
+    c2 = enemy_deck.first
+
     while true
       if c1.hp <= 0
         puts "#{c1.name} win."
@@ -53,6 +56,8 @@ end
 b = Battle.new
 system = System.new 0, 11
 
+player_deck = [Character.new("PC1", 1000)]
+
 progress = 0
 
 step = lambda do
@@ -60,7 +65,14 @@ step = lambda do
   system.power -= 1
   progress += 1
 
-  p [progress, system]
+  p [progress, system, player_deck]
+end
+
+
+discovery = lambda do
+  c = Character.new("PC#{player_deck.size + 1}", rand(3))
+  player_deck << c
+  p ['カード発見', player_deck]
 end
 
 event = lambda do |title|
@@ -69,9 +81,10 @@ event = lambda do |title|
     step.call
 
     if progress % 2 == 0
-      c1 = Character.new "u1", 10
-      c2 = Character.new "enamy", 10
-      b.start c1, c2
+      enemy_deck = [Character.new("enemy1", 5)]
+      b.start player_deck, enemy_deck
+    else
+      discovery.call
     end
 
     if system.power == 0
@@ -85,9 +98,14 @@ event = lambda do |title|
   puts "#{title} 終了"
 end
 
+senario = lambda do |events|
+  events.each do |e|
+    event.call e
+  end
+end
+
 puts "==========="
 puts "Game Start "
 puts "==========="
 
-event.call '第１話'
-event.call '第２話'
+senario.call ['第１話', '第２話']
