@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 
 class Character
-  attr_accessor :name, :hp, :df
+  attr_accessor :name, :power, :df
 
-  def initialize name, hp
+  def initialize name, power
     @name = name
-    @hp = hp
+    @power = power
     @atk = 2
     @df = 1
   end
@@ -21,10 +21,10 @@ class Battle
     c2 = enemy_deck.first
 
     while true
-      if c1.hp <= 0
+      if c1.power <= 0
         puts "#{c1.name} win."
         break
-      elsif c2.hp <= 0
+      elsif c2.power <= 0
         puts "#{c1.name} lose."
         break
       end
@@ -36,16 +36,34 @@ class Battle
 
   def atack c1, c2
     dmg = c2.atack - c1.df
-    c1.hp -= dmg
+    c1.power -= dmg
     puts "#{c2.name} atack! #{c1.name} is #{dmg} damage."
   end
 end
 
 class System
-  attr_accessor :money, :power
+  attr_accessor :money, :power, :progress, :experience
   def initialize money, power
     @money = money
     @power = power
+    @progress = 0
+    @experience = 0
+  end
+end
+
+class Event
+  attr_accessor :id, :title, :progress, :cost
+  def initialize id, title, progress, cost
+    @id = id
+    @title = title
+    @progress = progress
+    @cost = cost
+  end
+
+  def next system
+    puts "進む"
+    system.power -= 10
+    @progress += 10
   end
 end
 

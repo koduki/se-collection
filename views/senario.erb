@@ -5,7 +5,9 @@
   <body>
     <div style='background-image: url("/dummy.jpg");width:440px;height:560px'>
       <ul>
-        <li><a href='./event/1'>第1話 進行度:0% 消費体力: 0</a></li>
+        <% @senario.each do |event| %>
+        <li><a href='./event/<%= event.id %>'><%= event.title %> 進行度:<%= event.progress %>% 消費体力: <%= event.cost%></a></li>
+        <% end %>
       </ul>
     </div>
 
@@ -17,6 +19,16 @@
       <a href=''>合成</a>
       <a href=''>ガチャ</a>
     </p>
-    <%= Time.now %>
+
+    <div id='debug'>
+      <p><a href='/init'>初期化</a>　<%= Time.now %></p>
+      <textarea id='console' style='background-color:black;color:green;width:800px;height:150px'>
+        <% if @console != nil %>
+        <% @console.each do |o| %>
+> <%= o.inspect %>
+        <% end %>
+        <% end %>
+      </textarea>
+    </div>
   </body>
 </html>

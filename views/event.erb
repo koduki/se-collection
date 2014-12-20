@@ -4,13 +4,14 @@
   </head>
   <body>
     <div style='background-image: url("/dummy.jpg");width:440px;height:560px'>
-      <ul style='height:500px'>
-        <li>進行度: 0%</li>
-        <li>体力: 0%</li>
-        <li>経験値: 0%</li>
+      <h3><%= @event.title %></h3>
+      <ul style='height:450px'>
+        <li>進行度: <%= @system.progress %>%</li>
+        <li>体力: <%= @system.power %>%</li>
+        <li>経験値: <%= @system.experience %>0%</li>
       </ul>
 
-      <a href=''>進む</a>
+      <a href='/event/<%= @event.id %>/next'>進む</a>
     </div>
 
     <p>
@@ -21,6 +22,15 @@
       <a href=''>合成</a>
       <a href=''>ガチャ</a>
     </p>
-    <%= Time.now %>
-  </body>
+
+    <div id='debug'>
+      <p><a href='/init'>初期化</a>　<%= Time.now %></p>
+      <textarea id='console' style='background-color:black;color:green;width:800px;height:150px'>
+        <% if @console != nil %>
+        <% @console.each do |o| %>
+> <%= o.inspect %>
+        <% end %>
+        <% end %>
+      </textarea>
+    </div>  </body>
 </html>

@@ -15,6 +15,16 @@
       <a href=''>合成</a>
       <a href=''>ガチャ</a>
     </p>
-    <%= Time.now %>
+
+    <div id='debug'>
+      <p><a href='/init'>初期化</a>　<%= Time.now %></p>
+      <textarea id='console' style='background-color:black;color:green;width:800px;height:150px'>
+        <% if @console != nil %>
+        <% @console.each do |o| %>
+> <%= o.inspect %>
+        <% end %>
+        <% end %>
+      </textarea>
+    </div>
   </body>
 </html>
