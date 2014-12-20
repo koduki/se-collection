@@ -50,6 +50,12 @@ class System
   end
 end
 
+module EVENT_RESULT
+  PROGRESS = 1
+  CLEAR = 2
+  LACK_POWER = 3
+end
+
 class Event
   attr_accessor :id, :title, :progress, :cost
   def initialize id, title, progress, cost
@@ -60,9 +66,18 @@ class Event
   end
 
   def next system
-    puts "進む"
-    system.power -= 10
-    @progress += 10
+    puts @progress
+
+    if system.power <= 0
+      EVENT_RESULT::LACK_POWER
+    elsif @progress >= 80
+      puts 'CLEAR'
+      EVENT_RESULT::CLEAR
+    else
+      system.power -= 10
+      @progress += 10
+      EVENT_RESULT::PROGRESS
+    end
   end
 end
 

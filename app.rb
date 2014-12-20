@@ -62,13 +62,13 @@ end
 
 get '/event/:name/next' do
   run lambda {
-    @console << '進む'
-    if @system.power <= 0
-      @console << '行動値がなくなりました。ここから進めません'
-    elsif @event.progress >= 120
+    case @event.next(@system)
+    when EVENT_RESULT::PROGRESS then
+      @console << '進む'
+    when EVENT_RESULT::CLEAR then
       @console << 'クリア'
-    else
-      @event.next @system
+    when EVENT_RESULT::LACK_POWER  then
+      @console << '行動値がなくなりました。ここから進めません'
     end
   }
   erb :event
