@@ -2,11 +2,11 @@
   <head>
     <title>SE☆コレクション</title>
   </head>
-  <body>
+  <body onload='init()'>
     <div style='background-image: url("/dummy.jpg");width:440px;height:560px'>
       <h3><%= @event.title %></h3>
       <ul style='height:450px'>
-        <li>進行度: <%= @system.progress %>%</li>
+        <li>進行度: <%= @event.progress %>%</li>
         <li>体力: <%= @system.power %>%</li>
         <li>経験値: <%= @system.experience %>0%</li>
       </ul>
@@ -32,5 +32,19 @@
         <% end %>
         <% end %>
       </textarea>
-    </div>  </body>
+    </div>
+    <script>
+    function init(){
+      var on_bottom = function(){
+        console.log('run')
+        var targetId = 'console';
+        var obj = document.getElementById(targetId);
+        if(!obj) return;
+        obj.scrollTop = obj.scrollHeight;
+      };
+
+      on_bottom();
+    }
+    </script>
+  </body>
 </html>

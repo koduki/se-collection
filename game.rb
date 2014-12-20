@@ -42,11 +42,10 @@ class Battle
 end
 
 class System
-  attr_accessor :money, :power, :progress, :experience
+  attr_accessor :money, :power, :experience
   def initialize money, power
     @money = money
     @power = power
-    @progress = 0
     @experience = 0
   end
 end

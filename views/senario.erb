@@ -2,7 +2,7 @@
   <head>
     <title>SE☆コレクション</title>
   </head>
-  <body>
+  <body onload='init()'>
     <div style='background-image: url("/dummy.jpg");width:440px;height:560px'>
       <ul>
         <% @senario.each do |event| %>
@@ -30,5 +30,18 @@
         <% end %>
       </textarea>
     </div>
+    <script>
+    function init(){
+      var on_bottom = function(){
+        console.log('run')
+        var targetId = 'console';
+        var obj = document.getElementById(targetId);
+        if(!obj) return;
+        obj.scrollTop = obj.scrollHeight;
+      };
+
+      on_bottom();
+    }
+    </script>
   </body>
 </html>

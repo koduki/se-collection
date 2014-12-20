@@ -9,14 +9,21 @@ load './game.rb'
 use Rack::Session::Pool, :expire_after => 2592000
 
 def run callback
+  if session['system'] == nil
+    bind('system', System.new(1000, 100))
+  end
+
+  session['console'] = [] if session['console'] == nil
+
   @system = session['system']
   @senario = session['senario']
   @event = session['event']
-  @console = []
+  @console = session['console']
 
   callback.call
 
   @console = [@system, @senario, @event] + @console
+  session['console'] = @console
 end
 
 def bind key, value
@@ -55,7 +62,14 @@ end
 
 get '/event/:name/next' do
   run lambda {
-    @event.next @system
+    @console << '進む'
+    if @system.power <= 0
+      @console << '行動値がなくなりました。ここから進めません'
+    elsif @event.progress >= 120
+      @console << 'クリア'
+    else
+      @event.next @system
+    end
   }
   erb :event
 end
